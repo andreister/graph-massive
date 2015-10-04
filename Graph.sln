@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graph.Services", "Graph.Services\Graph.Services.csproj", "{3A271EFD-B7DF-43CF-9ED5-303D1CE0DDED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graph.Core", "Graph.Core\Graph.Core.csproj", "{B56EC239-305D-4829-A54D-280C47E29616}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graph.Web", "Graph.Web\Graph.Web.csproj", "{71BE284E-1F9F-4CFC-AC66-F2999428BFC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graph.Tools.DataLoader", "Graph.Tools.DataLoader\Graph.Tools.DataLoader.csproj", "{F7A1AE26-3124-408B-9925-70432B91232D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3A271EFD-B7DF-43CF-9ED5-303D1CE0DDED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A271EFD-B7DF-43CF-9ED5-303D1CE0DDED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A271EFD-B7DF-43CF-9ED5-303D1CE0DDED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A271EFD-B7DF-43CF-9ED5-303D1CE0DDED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B56EC239-305D-4829-A54D-280C47E29616}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B56EC239-305D-4829-A54D-280C47E29616}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B56EC239-305D-4829-A54D-280C47E29616}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B56EC239-305D-4829-A54D-280C47E29616}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71BE284E-1F9F-4CFC-AC66-F2999428BFC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71BE284E-1F9F-4CFC-AC66-F2999428BFC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71BE284E-1F9F-4CFC-AC66-F2999428BFC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71BE284E-1F9F-4CFC-AC66-F2999428BFC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7A1AE26-3124-408B-9925-70432B91232D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7A1AE26-3124-408B-9925-70432B91232D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7A1AE26-3124-408B-9925-70432B91232D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7A1AE26-3124-408B-9925-70432B91232D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
