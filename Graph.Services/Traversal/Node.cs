@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Graph.Services
+namespace Graph.Services.Traversal
 {
 	public class Node
 	{
@@ -11,14 +11,14 @@ namespace Graph.Services
 		private readonly Graph _graph;
 
 		/// <summary>
-		/// Flag used by the traversal algorithm to set or determine whether the node had been already visited.
+		/// Flag used by the BFS algorithm to check if the node had been already visited.
 		/// </summary>
 		internal bool IsExplored { get; set; }
 
 		/// <summary>
-		/// Traversal value.
+		/// Traversal layer updated by the BFS algorithm.
 		/// </summary>
-		public int TraversalLayer { get; set; }
+		public int DistanceFromStart { get; set; }
 
 		internal Node(int id, Graph graph)
 		{

@@ -64,8 +64,8 @@
     <Compile Include="Traversal\TraversalService.cs" />
     <Compile Include="Traversal\ILoadGraphRepository.cs" />
     <Compile Include="Traversal\LoadGraphRepository.cs" />
-    <Compile Include="Graph.cs" />
-    <Compile Include="Node.cs" />
+    <Compile Include="Traversal\Graph.cs" />
+    <Compile Include="Traversal\Node.cs" />
     <Compile Include="Storage\ISaveGraphRepository.cs" />
     <Compile Include="Storage\SaveGraphRepository.cs" />
     <Compile Include="Storage\StorageService.cs" />

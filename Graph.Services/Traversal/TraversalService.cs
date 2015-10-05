@@ -25,19 +25,19 @@ namespace Graph.Services.Traversal
 				var graph = _repository.LoadGraph();
 				
 				var startNode = graph[fromId];
-				startNode.TraversalLayer = 0;
+				startNode.DistanceFromStart = 0;
 
 				var algorithm = new BreadthFirstSearch();
 				algorithm.Run(startNode, x => {
 					foreach (var child in x.GetUnexploredChildren()) {
-						child.TraversalLayer = x.TraversalLayer + 1;
+						child.DistanceFromStart = x.DistanceFromStart + 1;
 						if (child.Id == toId) {
 							algorithm.Stop = true;
 						}
 					}
 				});
 
-				return graph[toId].TraversalLayer;
+				return graph[toId].DistanceFromStart;
 			}
 			catch (Exception ex) {
 				_logger.Error("Unexpected exception, cannot calculate the shortest path", ex);

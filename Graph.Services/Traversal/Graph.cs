@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace Graph.Services
+namespace Graph.Services.Traversal
 {
 	public class Graph : IEnumerable
 	{
@@ -13,8 +13,7 @@ namespace Graph.Services
 		}
 
 		/// <summary>
-		/// Duck typing to simplify initialization in unit tests :/ 
-		/// Have to stick with "Add" as the method name.
+		/// Duck typing to simplify initialization in unit tests - have to stick with "Add" as the method name :/
 		/// </summary>
 		public void Add(int from, int to)
 		{
@@ -22,6 +21,13 @@ namespace Graph.Services
 			RegisterNode(to);
 
 			_graph[from].Adjacent.Add(to);
+		}
+
+		internal void PrintTraversal()
+		{
+			foreach (var node in _graph.Values) {
+				System.Console.WriteLine(node.Id + ", distance " + node.DistanceFromStart);
+			}
 		}
 
 		private void RegisterNode(int id)
