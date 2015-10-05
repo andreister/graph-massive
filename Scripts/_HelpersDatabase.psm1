@@ -23,7 +23,7 @@ function Backup-Database($deployFolder, $database)
     Exit-IfError
 
     if ($result.Existed) {
-        Log -level:"success" -message:"Database $database succcessfully backed up to $backup"
+        Log -level:"success" -message:"Database '$database' succcessfully backed up to $backup"
     }    
 }
 
@@ -61,5 +61,5 @@ function New-Database($database)
     Invoke-Sqlcmd -Database "master" -Query $query
     Exit-IfError
         
-    Log -level:"success" -message:"Database $database succcessfully created"
+    Log -level:"success" -message:"Database '$database' succcessfully created"
 }

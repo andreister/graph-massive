@@ -1,4 +1,4 @@
-function Install-Service()
+function Install-Service($deployFolder, $serviceName)
 {
     $copyFrom = Resolve-Path "..\Graph.Services\bin\Debug"
     $copyTo = "$deployFolder\Service"
@@ -24,7 +24,11 @@ function Install-Service()
         $service = New-Service -Name $serviceName -BinaryPathName $executable -DisplayName $serviceName -StartupType Automatic | Out-Null
     }
 
-    if (!($service -eq $null)) {
+    if ($service -eq $null) {
+        Log -level:"warn" -message:"Failed to update service '$serviceName'"
+    }
+    else {
         Log -level:"success" -message:"Service '$serviceName' succcessfully updated"
     }
+
 }

@@ -12,9 +12,18 @@
 		{
 			get
 			{
-				return Id == 0
-					? "INSERT INTO Edges ([From], [To]) VALUES (@From, @To); SELECT SCOPE_IDENTITY() AS NewId"
-					: "UPDATE Edges SET [From]=@From, [To]=@To WHERE Id=@Id; SELECT 0 AS NewId";
+				return @"
+					IF EXISTS (SELECT * FROM Edges WHERE Id=@Id)
+					BEGIN
+						UPDATE Edges SET [From]=@From, [To]=@To WHERE Id=@Id
+						SELECT 0 AS NewId
+					END
+					ELSE 
+					BEGIN
+						INSERT INTO Edges ([From], [To]) VALUES (@From, @To); 
+						SELECT SCOPE_IDENTITY() AS NewId
+					END
+				";
 			}
 		}
 	}

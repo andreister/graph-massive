@@ -20,8 +20,8 @@ namespace Graph.Core.Database.Repositories
 		public void Save(Entity entity)
 		{
 			using (var connection = OpenConnection()) {
-				var id = connection.Query<dynamic>(entity.SaveSql, entity).Single().NewId;
-				if (entity.Id != 0) {
+				var id = (int)connection.Query<dynamic>(entity.SaveSql, entity).Select(x => (long)x.NewId).Single();
+				if (entity.Id == 0) {
 					entity.Id = id;
 				}
 			}

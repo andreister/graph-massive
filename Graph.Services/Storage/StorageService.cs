@@ -26,7 +26,7 @@ namespace Graph.Services.Storage
 		public void SaveGraph(XElement nodes)
 		{
 			try {
-				using (var scope = new TransactionScope()) {
+				using (var scope = CreateTransactionScope(IsolationLevel.ReadCommitted)) {
 					UpdateGraph(nodes);
 
 					scope.Complete();
@@ -38,20 +38,26 @@ namespace Graph.Services.Storage
 			}
 		}
 
+		private TransactionScope CreateTransactionScope(IsolationLevel isolationLevel)
+		{
+			var options = new TransactionOptions {IsolationLevel = isolationLevel};
+			return new TransactionScope(TransactionScopeOption.Required, options);
+		}
+
 		private void UpdateGraph(XElement nodes)
 		{
 			_repository.DeleteExistingGraph();
 
 			foreach (var node in nodes.Descendants("node")) {
 				var entity = new NodeEntity {
-					Id = node.GetElementValue<int>("id"),
-					Label = node.GetElementValue<string>("label")
+					Id = node.GetValue<int>("id"),
+					Label = node.GetValue<string>("label")
 				};
 				_repository.Save(entity);
 			}
 
 			foreach (var node in nodes.Descendants("node")) {
-				var from = node.GetElementValue<int>("id");
+				var from = node.GetValue<int>("id");
 				
 				var adjacentNodes = node.Element("adjacentNodes");
 				if (adjacentNodes == null) {
@@ -61,7 +67,7 @@ namespace Graph.Services.Storage
 				foreach (var adjacent in adjacentNodes.Descendants("id")) {
 					var entity = new EdgeEntity {
 						From = from,
-						To = adjacent.GetElementValue<int>("id")
+						To = adjacent.GetValue<int>("id")
 					};
 					_repository.Save(entity);
 				}
@@ -73,20 +79,27 @@ namespace Graph.Services.Storage
 	{
 		internal static class XElementExtensions
 		{
-			internal static TResult GetElementValue<TResult>(this XElement node, string elementName)
+			internal static TResult GetValue<TResult>(this XElement node, string elementName)
 			{
-				var element = node.Element(elementName);
-				if (element == null) {
-					return default(TResult);
-				}
+				string text;
 
-				var text = element.Value;
+				if (node.Name == elementName) {
+					text = node.Value;
+				}
+				else {
+					var element = node.Element(elementName);
+					if (element == null) {
+						return default(TResult);
+					}
+
+					text = element.Value;
+				}
 
 				var conversionType = typeof(TResult);
 
 				if (conversionType == typeof(int)) {
 					int result;
-					return (TResult)Convert.ChangeType(int.TryParse(element.Value, out result) ? result : 0, conversionType);
+					return (TResult)Convert.ChangeType(int.TryParse(text, out result) ? result : 0, conversionType);
 				}
 				if (conversionType == typeof(string)) {
 					return (TResult)Convert.ChangeType(text, conversionType);

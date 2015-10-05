@@ -1,7 +1,7 @@
 param(
     $deployFolder = "C:\GraphDeploy",
     $database = "Graph",
-    $serviceName = "Graph Massive Service",
+    $serviceName = "GraphMassiveService",
     [switch]$backup
 )
 
