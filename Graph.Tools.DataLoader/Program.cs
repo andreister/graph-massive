@@ -1,41 +1,29 @@
 ﻿using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Xml.Linq;
 using Graph.Core.Logging;
+using Graph.Services.Common.Endpoints;
 
 namespace Graph.Tools.DataLoader
 {
 	class Program
 	{
 		private static readonly ILogger _logger = LogManager.GetLogger();
-
+		
 		static void Main(string[] args)
 		{
 			var folder = args.FirstOrDefault() ?? "";
 			if (!Directory.Exists(folder)) {
-				string exeName = Path.GetFileName(Assembly.GetExecutingAssembly().CodeBase);
-				_logger.Error(@"Usage: " + exeName + " <folder>\nPlease make sure the folder you specified does exist");
+				var exeName = Path.GetFileName(Assembly.GetExecutingAssembly().CodeBase);
+				_logger.Error("Usage:\n\t" + exeName + " <folder>\n\tPlease make sure the folder you specified does exist\n");
 				return;
 			}
 
-			var xml = GetCombinedXml(folder);
-		}
-
-		private static XDocument GetCombinedXml(string folder)
-		{
-			var root = new XElement("nodes");
+			var wcfManager = new ClientEndpointsManager();
+			var graphProvider = new XmlGraphProvider(folder);
+			var loader = new GraphLoader(wcfManager, graphProvider);
 			
-			foreach (var file in Directory.GetFiles(folder).Where(x => x.EndsWith(".xml")))
-			{
-				var xml = XDocument.Load(file);
-				root.Add(xml.Descendants("node"));
-			}
-
-			var result = new XDocument();
-			result.Add(root);
-
-			return result;
+			loader.SaveGraph();
 		}
 	}
 }
