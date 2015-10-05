@@ -2,7 +2,8 @@ param(
     $deployFolder = "C:\GraphDeploy",
     $database = "Graph",
     $serviceName = "GraphMassiveService",
-    [switch]$backup
+    [switch]$backup,
+    [switch]$refresh
 )
 
 Add-PSSnapin SqlServerCmdletSnapin100
@@ -16,7 +17,9 @@ try {
     if ($backup) {
         Backup-Database -deployFolder:$deployFolder -database:$database
     }
-    New-Database -database:$database
+    if ($refresh) {
+        New-Database -database:$database
+    }
 
     Install-Service -deployFolder:$deployFolder -serviceName:$serviceName
 }

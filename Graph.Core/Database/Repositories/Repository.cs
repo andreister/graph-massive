@@ -34,6 +34,13 @@ namespace Graph.Core.Database.Repositories
 			}
 		}
 
+		protected IEnumerable<TResult> SelectAdHoc<TResult>(string adHocQuery, object param = null)
+		{
+			using (var connection = OpenConnection()) {
+				return connection.Query<TResult>(adHocQuery, param);
+			}
+		}
+
 		private string GetTableName<TEntity>()
 		{
 			var attribute = typeof(TEntity).GetCustomAttributes(typeof(TableNameAttribute), false).Cast<TableNameAttribute>().Single();

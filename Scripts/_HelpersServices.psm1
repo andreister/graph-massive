@@ -22,6 +22,7 @@ function Install-Service($deployFolder, $serviceName)
         }
         $executable = "$copyTo\Graph.Services.exe"
         $service = New-Service -Name $serviceName -BinaryPathName $executable -DisplayName $serviceName -StartupType Automatic | Out-Null
+	Start-Service $serviceName
     }
 
     if ($service -eq $null) {
