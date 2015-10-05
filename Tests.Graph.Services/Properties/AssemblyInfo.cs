@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Graph.Services")]
+[assembly: AssemblyTitle("Tests.Graph.Services")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Graph.Services")]
+[assembly: AssemblyProduct("Tests.Graph.Services")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -18,10 +18,9 @@ using System.Runtime.InteropServices;
 // to COM components.  If you need to access a type in this assembly from 
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
-[assembly: InternalsVisibleTo("Tests.Graph.Services")]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("eb61912c-8df5-410a-a938-31a43062048b")]
+[assembly: Guid("776f2b01-dbf3-41dc-8f73-7b9135076d9f")]
 
 // Version information for an assembly consists of the following four values:
 //

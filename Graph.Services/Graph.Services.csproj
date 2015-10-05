@@ -44,6 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calculation\CalculationService.cs" />
+    <Compile Include="Storage\IStorageRepository.cs" />
+    <Compile Include="Storage\StorageRepository.cs" />
     <Compile Include="Storage\StorageService.cs" />
     <Compile Include="Presentation\PresentationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

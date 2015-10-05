@@ -13,7 +13,7 @@ namespace Graph.Services.Common.Endpoints
 		private readonly List<ServiceHost> _hosts = new List<ServiceHost>();
 
 		public void OpenEndpoint<TEndpoint>()
-			where TEndpoint : IWcfEndpoint, new()
+			where TEndpoint : IWcfEndpoint
 		{
 			var endpointType = typeof (TEndpoint);
 			var interfaces = endpointType.GetInterfaces().Where(x => x.Name != typeof(IWcfEndpoint).Name).ToList();

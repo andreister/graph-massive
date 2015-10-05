@@ -1,6 +1,6 @@
-function Backup-Database()
+function Backup-Database($deployFolder, $database)
 {
-    $backupFolder = "$deployFolder\backups"
+    $backupFolder = "$deployFolder\Backups"
     if (!(Test-Path $backupFolder)) {
         New-Item $backupFolder -Type Directory | Out-Null
     }
@@ -27,7 +27,7 @@ function Backup-Database()
     }    
 }
 
-function New-Database()
+function New-Database($database)
 {
     $query = "
         IF EXISTS (SELECT 1 FROM sys.databases WHERE Name = '$database')
@@ -44,8 +44,8 @@ function New-Database()
         GO
 
         CREATE TABLE Nodes (
-            Id INT CONSTRAINT PK_Nodes PRIMARY KEY IDENTITY(1,1) NOT NULL,
-            Name VARCHAR(50) NOT NULL
+            Id INT CONSTRAINT PK_Nodes PRIMARY KEY NOT NULL,
+            Label VARCHAR(50) NOT NULL
         )
         GO
 

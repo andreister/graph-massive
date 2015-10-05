@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B56EC239-305D-4829-A54D-280C47E29616}</ProjectGuid>
+    <ProjectGuid>{B55F045D-D22F-4B32-9492-4E66D3A28C3E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Graph.Core</RootNamespace>
-    <AssemblyName>Graph.Core</AssemblyName>
+    <RootNamespace>Tests.Graph.Services</RootNamespace>
+    <AssemblyName>Tests.Graph.Services</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,11 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dapper">
-      <HintPath>..\packages\Dapper.1.42\lib\net45\Dapper.dll</HintPath>
+    <Reference Include="Moq">
+      <HintPath>..\packages\Moq.4.2.1507.0118\lib\net40\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="NLog">
-      <HintPath>..\packages\NLog.4.1.2\lib\net45\NLog.dll</HintPath>
+    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -45,25 +46,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database\Entity.cs" />
-    <Compile Include="Database\Generated\Edge.cs" />
-    <Compile Include="Database\Generated\Node.cs" />
-    <Compile Include="Database\TableNameAttribute.cs" />
-    <Compile Include="Database\Repositories\IRepository.cs" />
-    <Compile Include="Database\Repositories\Repository.cs" />
-    <Compile Include="Logging\ILogger.cs" />
-    <Compile Include="Logging\Logger.cs" />
-    <Compile Include="Logging\LogLevel.cs" />
-    <Compile Include="Logging\LogManager.cs" />
+    <Compile Include="StorageServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Logging\nlog.config">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Graph.Core\Graph.Core.csproj">
+      <Project>{B56EC239-305D-4829-A54D-280C47E29616}</Project>
+      <Name>Graph.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Graph.Services.Common\Graph.Services.Common.csproj">
+      <Project>{99316BA4-BAAC-4A01-B20F-30DAA46C45DF}</Project>
+      <Name>Graph.Services.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Graph.Services\Graph.Services.csproj">
+      <Project>{3A271EFD-B7DF-43CF-9ED5-303D1CE0DDED}</Project>
+      <Name>Graph.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

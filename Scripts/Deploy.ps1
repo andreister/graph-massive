@@ -1,7 +1,8 @@
 param(
     $deployFolder = "C:\GraphDeploy",
     $database = "Graph",
-    $serviceName = "Graph Massive Service"
+    $serviceName = "Graph Massive Service",
+    [switch]$backup
 )
 
 Add-PSSnapin SqlServerCmdletSnapin100
@@ -12,10 +13,12 @@ Import-Module .\_HelpersDatabase.psm1
 Import-Module .\_HelpersServices.psm1
 
 try {
-    Backup-Database
-    New-Database
+    if ($backup) {
+        Backup-Database -deployFolder:$deployFolder -database:$database
+    }
+    New-Database -database:$database
 
-    Install-Service 
+    Install-Service -deployFolder:$deployFolder -serviceName:$serviceName
 }
 finally {
     Set-Location $PSScriptRoot
