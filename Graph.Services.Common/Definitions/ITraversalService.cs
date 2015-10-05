@@ -3,9 +3,9 @@
 namespace Graph.Services.Common.Definitions
 {
 	[ServiceContract(SessionMode = SessionMode.Required)]
-	public interface ICalculationService : IWcfEndpoint
+	public interface ITraversalService : IWcfEndpoint
 	{
 		[OperationContract]
-		void FindShortestPath(int startNodeId, int endNodeId);
+		int FindShortestPath(int fromId, int toId);
 	}
 }

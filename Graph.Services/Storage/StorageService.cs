@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Transactions;
 using System.Xml.Linq;
 using Graph.Core.Database.Generated;
 using Graph.Core.Logging;
@@ -10,14 +11,14 @@ namespace Graph.Services.Storage
 	internal class StorageService : IStorageService
 	{
 		private static readonly ILogger _logger = LogManager.GetLogger();
-		private readonly IStorageRepository _repository;
+		private readonly ISaveGraphRepository _repository;
 
 		public StorageService()
 		{
-			_repository = new StorageRepository();
+			_repository = new SaveGraphRepository();
 		}
 
-		public StorageService(IStorageRepository repository)
+		public StorageService(ISaveGraphRepository repository)
 		{
 			_repository = repository;
 		}
@@ -25,19 +26,45 @@ namespace Graph.Services.Storage
 		public void SaveGraph(XElement nodes)
 		{
 			try {
-				_repository.DeleteExistingGraph();
+				using (var scope = new TransactionScope()) {
+					UpdateGraph(nodes);
 
-				foreach (var node in nodes.Descendants("node")) {
-					var entity = new Node {
-						Id = node.GetElementValue<int>("id"), 
-						Label = node.GetElementValue<string>("label")
-					};
-					_repository.Save(entity);
+					scope.Complete();
 				}
 			}
 			catch (Exception ex) {
-				_logger.Error("Unexpected exception", ex);
+				_logger.Error("Unexpected exception, the graph was not saved", ex);
 				throw;
+			}
+		}
+
+		private void UpdateGraph(XElement nodes)
+		{
+			_repository.DeleteExistingGraph();
+
+			foreach (var node in nodes.Descendants("node")) {
+				var entity = new NodeEntity {
+					Id = node.GetElementValue<int>("id"),
+					Label = node.GetElementValue<string>("label")
+				};
+				_repository.Save(entity);
+			}
+
+			foreach (var node in nodes.Descendants("node")) {
+				var from = node.GetElementValue<int>("id");
+				
+				var adjacentNodes = node.Element("adjacentNodes");
+				if (adjacentNodes == null) {
+					continue;
+				}
+
+				foreach (var adjacent in adjacentNodes.Descendants("id")) {
+					var entity = new EdgeEntity {
+						From = from,
+						To = adjacent.GetElementValue<int>("id")
+					};
+					_repository.Save(entity);
+				}
 			}
 		}
 	}

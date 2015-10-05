@@ -7,7 +7,7 @@ namespace Graph.Core.Database.Repositories
 {
 	public class Repository : IRepository 
 	{
-		public IEnumerable<TEntity> Select<TEntity>(string where, object param = null)
+		public IEnumerable<TEntity> Select<TEntity>(string where = null, object param = null)
 			where TEntity : Entity
 		{
 			var tableName = GetTableName<TEntity>();

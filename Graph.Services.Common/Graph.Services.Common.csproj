@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Definitions\ICalculationService.cs" />
+    <Compile Include="Definitions\ITraversalService.cs" />
     <Compile Include="Definitions\IStorageService.cs" />
     <Compile Include="Endpoints\IClientEndpointsManager.cs" />
     <Compile Include="Definitions\IWcfEndpoint.cs" />

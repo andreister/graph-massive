@@ -2,7 +2,7 @@
 
 namespace Graph.Services.Storage
 {
-	public interface IStorageRepository : IRepository
+	public interface ISaveGraphRepository : IRepository
 	{
 		void DeleteExistingGraph();
 	}

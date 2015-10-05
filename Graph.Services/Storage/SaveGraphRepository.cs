@@ -2,7 +2,7 @@
 
 namespace Graph.Services.Storage
 {
-	internal class StorageRepository : Repository, IStorageRepository
+	internal class SaveGraphRepository : Repository, ISaveGraphRepository
 	{
 		public void DeleteExistingGraph()
 		{

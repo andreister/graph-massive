@@ -46,8 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database\Entity.cs" />
-    <Compile Include="Database\Generated\Edge.cs" />
-    <Compile Include="Database\Generated\Node.cs" />
+    <Compile Include="Database\Generated\EdgeEntity.cs" />
+    <Compile Include="Database\Generated\NodeEntity.cs" />
     <Compile Include="Database\TableNameAttribute.cs" />
     <Compile Include="Database\Repositories\IRepository.cs" />
     <Compile Include="Database\Repositories\Repository.cs" />

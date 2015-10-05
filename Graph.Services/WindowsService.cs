@@ -2,10 +2,10 @@
 using System.IO;
 using System.ServiceProcess;
 using Graph.Core.Logging;
-using Graph.Services.Calculation;
 using Graph.Services.Common.Endpoints;
 using Graph.Services.Presentation;
 using Graph.Services.Storage;
+using Graph.Services.Traversal;
 
 namespace Graph.Services
 {
@@ -34,7 +34,7 @@ namespace Graph.Services
 		{
 			_manager.OpenEndpoint<StorageService>();
 			_manager.OpenEndpoint<PresentationService>();
-			_manager.OpenEndpoint<CalculationService>();
+			_manager.OpenEndpoint<TraversalService>();
 
 			_logger.Info("Windows service started");
 		}
