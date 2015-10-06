@@ -22,8 +22,9 @@ function Install-Service($deployFolder, $serviceName)
         }
         $executable = "$copyTo\Graph.Services.exe"
         $service = New-Service -Name $serviceName -BinaryPathName $executable -DisplayName $serviceName -StartupType Automatic | Out-Null
-	Start-Service $serviceName
     }
+
+    Start-Service -Name $serviceName
 
     if ($service -eq $null) {
         Log -level:"warn" -message:"Failed to update service '$serviceName'"
