@@ -21,6 +21,8 @@ namespace Graph.Services.Traversal
 			RegisterNode(to);
 
 			_graph[from].Adjacent.Add(to);
+
+			//as per the requirements, we operate on an undirected graph
 			_graph[to].Adjacent.Add(from);
 		}
 

@@ -10,13 +10,19 @@ namespace Graph.Services.Presentation
 		{
 			return SelectAdHoc<Edge>(@"
 				SELECT 
-					source.Id    AS SourceId,
-					source.Label AS Source,
-					target.Id    AS TargetId,
-					target.Label AS Target
-				FROM Edges e
-				INNER JOIN Nodes source ON source.Id = e.[From]
-				INNER JOIN Nodes target ON target.Id = e.[To]
+					source.Id				AS SourceId,
+					source.Label			AS Source,
+					CASE 
+						WHEN target.Id IS NULL THEN source.Id
+						ELSE target.Id
+					END						AS TargetId,
+					CASE 
+						WHEN target.Label IS NULL THEN source.Label
+						ELSE target.Label
+					END						AS Target
+				FROM Nodes source
+				LEFT OUTER JOIN Edges e ON e.[From] = source.Id
+				LEFT OUTER JOIN Nodes target ON target.Id = e.[To]
 			");
 		}
 	}

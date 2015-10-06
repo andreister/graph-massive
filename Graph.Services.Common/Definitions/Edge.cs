@@ -16,5 +16,10 @@ namespace Graph.Services.Common.Definitions
 
 		[DataMember] 
 		public string Target { get; set; }
+
+		public override string ToString()
+		{
+			return Source + " - " + Target;
+		}
 	}
 }
