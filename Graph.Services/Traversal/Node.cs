@@ -18,7 +18,7 @@ namespace Graph.Services.Traversal
 		/// <summary>
 		/// Traversal layer updated by the BFS algorithm.
 		/// </summary>
-		public int DistanceFromStart { get; set; }
+		public int Layer { get; set; }
 
 		internal Node(int id, Graph graph)
 		{

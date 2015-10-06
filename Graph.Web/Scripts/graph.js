@@ -1,31 +1,30 @@
 //inspired by http://jsfiddle.net/chrisJamesC/HgHqy/
 
-var links = [];
+var edges = [];
 $.ajax({
 	type: "POST",
 	dataType: "json",
-	contentType: "application/json; charset=utf-8",
 	traditional: true,
 	async: false,
-	url: "/home/getnodes",
+	url: "/graph/edges",
 	success: function(results) {
-		links = $.parseJSON(results);
+		edges = results;
 	}
 });
 
 var nodes = {};
 
-// Compute the distinct nodes from the links.
-links.forEach(function (link) {
-	link.source = nodes[link.Source] || (nodes[link.Source] = { id: link.SourceId, name: link.Source });
-	link.target = nodes[link.Target] || (nodes[link.Target] = { id: link.TargetId, name: link.Target });
+// Compute the distinct nodes from the edges.
+edges.forEach(function (x) {
+	x.source = nodes[x.Source] || (nodes[x.Source] = { id: x.SourceId, name: x.Source });
+	x.target = nodes[x.Target] || (nodes[x.Target] = { id: x.TargetId, name: x.Target });
 });
 
 var w = 960, h = 500;
 
 var force = d3.layout.force()
     .nodes(d3.values(nodes))
-    .links(links)
+    .links(edges)
     .size([w, h])
     .linkDistance(150)
     .charge(-500)
@@ -35,20 +34,63 @@ var force = d3.layout.force()
 var svg = d3.select("div#graph").append("svg:svg").attr("width", w).attr("height", h);
 
 var path = svg.append("svg:g").selectAll("path").data(force.links()).enter()
-			  .append("svg:path").attr("class", function () { return "link resolved"; });
+			  .append("svg:path").attr("class", function () { return "edge"; });
 
 var selected = 0;
 var toggleCircle = (function () {
-	var currentColor = "white";
-
 	return function () {
-		selected += currentColor == "white" ? 1 : -1;
-
-		if (selected < 2) {
-			currentColor = currentColor == "white" ? "magenta" : "white";
-			d3.select(this).style("fill", currentColor);
-
-			console.log("Clicked on " + this.__data__.name);
+		var d3nodes = d3.values(nodes);
+		
+		var traversedNodes = d3nodes.filter(function (x) { return x.traversed; });
+		if (traversedNodes.length > 0) {
+			d3nodes.forEach(function (n) {
+				if (!n.selected && !n.traversed) {
+					return;
+				}
+				n.selected = false;
+				n.traversed = false;
+				var nCircle = circle[0].filter(function (x) { return x.__data__.id == n.id; })[0];
+				d3.select(nCircle).style("fill", "white");
+			});
+			return;
+		}
+		var selectedNodes = d3nodes.filter(function (x) { return x.selected; });
+		
+		if (selectedNodes.length <= 2) {
+			var node = this.__data__;
+			
+			node.selected = !node.selected;
+			d3.select(this).style("fill", node.selected ? "magenta" : "white");
+			if (node.selected) {
+				selectedNodes.push(node);
+			} else {
+				selectedNodes.pop(node);
+			}
+			
+			if (selectedNodes.length == 2) {
+				$.ajax({
+					type: "POST",
+					dataType: "json",
+					traditional: true,
+					url: "/graph/path",
+					data: { from: selectedNodes[0].id, to: selectedNodes[1].id },
+					success: function (results) {
+						var nodes = JSON.parse(results);
+						nodes.forEach(function (id) {
+							var pathCircle = circle[0].filter(function (x) { return x.__data__.id == id; })[0];
+							var pathNode = pathCircle.__data__;
+							
+							if (!pathNode.selected) {
+								pathNode.traversed = true;
+								d3.select(pathCircle).style("fill", "cyan");
+							}
+						});
+					},
+					error: function (jqXHR, textStatus, errorThrown) {
+						console.error(textStatus + ", check jqXHR for more details");
+					}
+				});
+			}
 		}
 	};
 })();

@@ -6,6 +6,6 @@ namespace Graph.Services.Common.Definitions
 	public interface ITraversalService : IWcfEndpoint
 	{
 		[OperationContract]
-		int FindShortestPath(int fromId, int toId);
+		int[] FindShortestPath(int fromId, int toId);
 	}
 }

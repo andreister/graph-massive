@@ -21,13 +21,7 @@ namespace Graph.Services.Traversal
 			RegisterNode(to);
 
 			_graph[from].Adjacent.Add(to);
-		}
-
-		internal void PrintTraversal()
-		{
-			foreach (var node in _graph.Values) {
-				System.Console.WriteLine(node.Id + ", distance " + node.DistanceFromStart);
-			}
+			_graph[to].Adjacent.Add(from);
 		}
 
 		private void RegisterNode(int id)

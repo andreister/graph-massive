@@ -16,12 +16,9 @@ namespace Tests.Graph.Services
 			repository.Setup(x => x.LoadGraph()).Returns(graph);
 
 			var service = new TraversalService(repository.Object);
-			var pathLength = service.FindShortestPath(from, to);
+			var path = service.FindShortestPath(from, to);
 
-			var expectedLength = expectedPath.Length - 1;
-			Assert.That(pathLength, Is.EqualTo(expectedLength), explanation);
-
-			graph.PrintTraversal();
+			Assert.That(path, Is.EqualTo(expectedPath), explanation);
 		}
 
 		public IEnumerable<TestCaseData> Scenarios
