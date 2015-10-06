@@ -60,7 +60,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClientEndpointsManager.cs" />
     <Compile Include="Presentation\ILoadEdgesRepository.cs" />
     <Compile Include="Presentation\LoadEdgesRepository.cs" />
     <Compile Include="Traversal\BreadthFirstSearch.cs" />
